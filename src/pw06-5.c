@@ -2,12 +2,13 @@
 #include <unistd.h>
 #include <string.h>
 
-void clear_screen();
 int absolute_value(int value);
-double ceil(double value);
-double floor(double value);
+double my_ceil(double value);
+double my_floor(double value);
 int get_int_num();
 double get_double_num();
+void enter_to_main_menu();
+void clear_screen();
 
 int main(void)
 {
@@ -51,14 +52,13 @@ int main(void)
 
             printf("Модуль числа: %d равен %d\n", value, result);
 
-            printf("Введите ENTER для возврата в главное меню\n");
-
-            getchar();
+            enter_to_main_menu();
 
             break;
 
         case 2:
             clear_screen();
+
             printf("Введите число для проверки знака.\n");
 
             value = get_int_num();
@@ -67,44 +67,46 @@ int main(void)
             {
                 printf("Число %d отрицательное. Знак (-)\n", value);
             }
+            else if (value == 0)
+            {
+                printf("Число %d не имеет знака\n", value);
+            }
             else
             {
                 printf("Число %d положительное знак (+)\n", value);
             }
 
-            printf("Введите ENTER для возврата в главное меню\n");
-
-            getchar();
+            enter_to_main_menu();
 
             break;
 
         case 3:
+            clear_screen();
+
             printf("Введите число для округления вверх.\n");
 
             d_value = get_double_num();
 
-            d_result = ceil(d_value);
+            d_result = my_ceil(d_value);
 
             printf("Число %.2f округленное верх равно %.0f\n", d_value, d_result);
 
-            printf("Введите ENTER для возврата в главное меню\n");
-
-            getchar();
+            enter_to_main_menu();
 
             break;
 
         case 4:
+            clear_screen();
+
             printf("Введите число для округления вниз.\n");
 
             d_value = get_double_num();
 
-            d_result = floor(d_value);
+            d_result = my_floor(d_value);
 
             printf("Число %.2f округленное вниз равно %.0f\n", d_value, d_result);
 
-            printf("Введите ENTER для возврата в главное меню\n");
-
-            getchar();
+            enter_to_main_menu();
 
             break;
 
@@ -119,10 +121,6 @@ int main(void)
     return 0;
 }
 
-void clear_screen()
-{
-    printf("\033[H\033[2J\033[3J");
-}
 
 int absolute_value(int value)
 {
@@ -131,22 +129,22 @@ int absolute_value(int value)
     return value;
 }
 
-double ceil(double value)
+double my_ceil(double value)
 {
-    long long compare = (long long)value;
+    long long compare = value;
 
     if (value == compare) return value;
 
-    return (value > 0.0) ? (double)(compare + 1) : (double)compare;
+    return (value > 0.0) ? (compare + 1) : compare;
 }
 
-double floor(double value)
+double my_floor(double value)
 {
-    long long compare = (long long)value;
+    long long compare = value;
 
     if (value == compare) return value;
 
-    return (value > 0.0) ? (double)compare : (double)(compare - 1);
+    return (value > 0.0) ? compare : (compare - 1);
 }
 
 int get_int_num()
@@ -157,7 +155,7 @@ int get_int_num()
     {
         if (scanf("%d", &number) == 1)
         {
-            getchar();
+            while (getchar() != '\n');
             return number;
         }
 
@@ -168,17 +166,29 @@ int get_int_num()
 
 double get_double_num()
 {
-    double number = 0;
+    double number = 0.0;
 
     while (1)
     {
         if (scanf("%lf", &number) == 1)
         {
-            getchar();
+            while (getchar() != '\n');
             return number;
         }
 
         while (getchar() != '\n');
         printf("Введите корректное число\n");
     }
+}
+
+void enter_to_main_menu()
+{
+    printf("Введите ENTER для возврата в главное меню\n");
+
+    while (getchar() != '\n');
+}
+
+void clear_screen()
+{
+    printf("\033[H\033[2J\033[3J");
 }
