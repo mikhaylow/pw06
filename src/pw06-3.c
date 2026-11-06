@@ -3,6 +3,7 @@
 
 int get_char_to_int(void);
 bool isPalindrome(int x);
+int average(int numbers[], int len);
 
 int main(void)
 {
@@ -12,39 +13,37 @@ int main(void)
 
     int numbers[5] = {0};
 
+    int numbers_len = sizeof(numbers) / sizeof(numbers[0]);
+
     size_t i = 0;
 
-    while ((number = get_char_to_int()) != 0)
-    {
+    do {
+
+        if (i == numbers_len)
+        {
+            break;
+        }
+
+        number = get_char_to_int();
+
         if (isPalindrome(number))
         {
             numbers[i] = number;
             printf("palindrome number: %d\n", number);
         }
-        else 
+        else
         {
             numbers[i] = number;
             printf("other number: %d\n", number);
         }
+
         i++;
-        if (i == 5)
-        {
-            break;
-        }
-    }
 
-    int sum = 0;
+    } while (number != 0);
 
-    int numbers_len = sizeof(numbers) / sizeof(numbers[0]);
+    int numbers_average = average(numbers, numbers_len);
 
-    for (size_t i = 0; i < numbers_len; i++)
-    {
-        sum += numbers[i];
-    }
-
-    int average = sum / numbers_len;
-
-    printf("average: %d\n", average);
+    printf("average: %d\n", numbers_average);
 
     return 0;
 }
@@ -93,4 +92,16 @@ bool isPalindrome(int x)
 
     if (original == reversed) return true;
     else return false;
+}
+
+int average(int numbers[], int len)
+{
+    int sum = 0;
+
+    for (size_t i = 0; i < len; i++)
+    {
+        sum += numbers[i];
+    }
+
+    return sum / len;
 }
