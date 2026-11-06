@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <string.h>
 
 int absolute_value(int value);
 double my_ceil(double value);

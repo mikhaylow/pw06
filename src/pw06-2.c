@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <wchar.h>
 #include <locale.h>
 
@@ -14,7 +13,7 @@ int main(void)
     a_count = 0;
     e_count = 0;
 
-    while ((w_ch = getwchar()) != L'#')
+    while ((w_ch = getwchar()) != L'#' && w_ch != WEOF)
     {
         switch (w_ch)
         {
@@ -28,7 +27,7 @@ int main(void)
         }
     }
 
-    printf("count a: %u\ncount e: %u\n", a_count, e_count);
+    wprintf(L"count a: %u\ncount e: %u\n", a_count, e_count);
 
     return 0;
 }
